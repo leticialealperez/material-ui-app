@@ -9,13 +9,16 @@ import {
   Typography,
 } from "@mui/material";
 import { Product } from "../interfaces/product";
+import { useAppDispatch } from "../store/hooks";
+import { togglefavorite } from "../store/modules/productsSlice";
 
 interface CardProductProps {
   product: Product;
-  toggleFavorite: (productId: number) => void;
 }
 
-export function CardProduct({ product, toggleFavorite }: CardProductProps) {
+export function CardProduct({ product }: CardProductProps) {
+  const dispatch = useAppDispatch();
+
   return (
     <Card>
       <CardMedia
@@ -39,7 +42,7 @@ export function CardProduct({ product, toggleFavorite }: CardProductProps) {
       <CardActions>
         <IconButton
           aria-label="add to favorites"
-          onClick={() => toggleFavorite(product.id)}
+          onClick={() => dispatch(togglefavorite(product.id))}
         >
           {product.isFavorite ? <Favorite color="error" /> : <FavoriteBorder />}
         </IconButton>
