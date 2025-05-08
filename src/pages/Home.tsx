@@ -1,16 +1,30 @@
 import { Box, Container, Fab, Typography } from "@mui/material";
-import { AppBar } from "../component/AppBar";
-import { useState } from "react";
+import { AppBar } from "../components/AppBar";
+import { useEffect, useState } from "react";
 import { Add } from "@mui/icons-material";
-import { Modal } from "../component/Modal";
-import { ProductsList } from "../component/ProductsList";
+import { Modal } from "../components/Modal";
+import { ProductsList } from "../components/ProductsList";
+import { useAppSelector } from "../store/hooks";
+import { selectUserLogged } from "../store/modules/userLoggedSlice";
+import { useNavigate } from "react-router";
 
 export function Home() {
+  const userLogged = useAppSelector(selectUserLogged);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userLogged.id === 0) {
+      // já NÃO tem um usuario logado, navega até a página de login
+      navigate("/sign-in");
+    }
+  }, [navigate, userLogged]);
 
   function handleToggleModal() {
     setIsModalOpen((currentValue) => !currentValue);
   }
+
+  if (userLogged.id === 0) return;
 
   return (
     <>

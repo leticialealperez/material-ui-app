@@ -9,8 +9,9 @@ import {
 } from "@mui/material";
 import { NewProduct } from "../interfaces/product";
 import { useState } from "react";
-import { useAppDispatch } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { add } from "../store/modules/productsSlice";
+import { selectUserLogged } from "../store/modules/userLoggedSlice";
 
 interface ModalProps {
   isModalOpen: boolean;
@@ -18,10 +19,13 @@ interface ModalProps {
 }
 
 export function Modal({ isModalOpen, handleToggleModal }: ModalProps) {
+  const userLogged = useAppSelector(selectUserLogged);
+
   const [form, setForm] = useState<NewProduct>({
     title: "",
     imgUrl: "",
     description: "",
+    userId: userLogged.id,
   });
 
   const dispatch = useAppDispatch();
@@ -56,6 +60,7 @@ export function Modal({ isModalOpen, handleToggleModal }: ModalProps) {
       title: "",
       imgUrl: "",
       description: "",
+      userId: userLogged.id,
     });
   }
 

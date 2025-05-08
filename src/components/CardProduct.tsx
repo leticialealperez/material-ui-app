@@ -1,4 +1,4 @@
-import { Favorite, FavoriteBorder } from "@mui/icons-material";
+import { Delete, Favorite, FavoriteBorder } from "@mui/icons-material";
 import {
   Card,
   CardActions,
@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { Product } from "../interfaces/product";
 import { useAppDispatch } from "../store/hooks";
-import { togglefavorite } from "../store/modules/productsSlice";
+import { togglefavorite, remove } from "../store/modules/productsSlice";
 
 interface CardProductProps {
   product: Product;
@@ -45,6 +45,13 @@ export function CardProduct({ product }: CardProductProps) {
           onClick={() => dispatch(togglefavorite(product.id))}
         >
           {product.isFavorite ? <Favorite color="error" /> : <FavoriteBorder />}
+        </IconButton>
+
+        <IconButton
+          aria-label="remove product"
+          onClick={() => dispatch(remove(product.id))}
+        >
+          <Delete />
         </IconButton>
       </CardActions>
     </Card>

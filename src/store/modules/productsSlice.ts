@@ -22,11 +22,18 @@ const productsSlice = createSlice({
         }
       });
     },
+    remove: (currentState, action: PayloadAction<number>) => {
+      const index = currentState.findIndex((p) => p.id === action.payload);
+
+      if (index >= 0) {
+        currentState.splice(index, 1);
+      }
+    },
   },
 });
 
 // Exportamos para poder disparar essas ações no componentes
-export const { add, togglefavorite } = productsSlice.actions;
+export const { add, togglefavorite, remove } = productsSlice.actions;
 
 export const selectProducts = (store: RootState) => store.products;
 

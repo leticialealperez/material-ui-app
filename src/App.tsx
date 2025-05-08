@@ -1,16 +1,17 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { AppRoutes } from "./routes/AppRoutes";
 import { light } from "./themes/light";
-import { Provider as ReduxProvider } from "react-redux";
-import { store } from "./store";
+import { useAppSelector } from "./store/hooks";
+import { selectTheme } from "./store/modules/themeSlice";
+import { dark } from "./themes/dark";
 
 export function App() {
+  const appTheme = useAppSelector(selectTheme);
+
   return (
-    <ReduxProvider store={store}>
-      <ThemeProvider theme={light}>
-        <CssBaseline />
-        <AppRoutes />
-      </ThemeProvider>
-    </ReduxProvider>
+    <ThemeProvider theme={appTheme.value === "light" ? light : dark}>
+      <CssBaseline />
+      <AppRoutes />
+    </ThemeProvider>
   );
 }

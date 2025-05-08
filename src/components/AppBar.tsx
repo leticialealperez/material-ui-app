@@ -1,4 +1,4 @@
-import { Menu, LocalGroceryStore as CartIcon } from "@mui/icons-material";
+import { Logout, LocalGroceryStore as CartIcon } from "@mui/icons-material";
 import {
   AppBar as AppBarMUI,
   Badge,
@@ -7,25 +7,17 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { useAppSelector } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { selectProducts } from "../store/modules/productsSlice";
+import { logout } from "../store/modules/userLoggedSlice";
 
 export function AppBar() {
   const products = useAppSelector(selectProducts);
+  const dispatch = useAppDispatch();
 
   return (
     <AppBarMUI position="static">
       <Toolbar>
-        <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          sx={{ mr: 2 }}
-        >
-          <Menu />
-        </IconButton>
-
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           Growdev
         </Typography>
@@ -45,6 +37,17 @@ export function AppBar() {
             </IconButton>
           </Badge>
         </Box>
+
+        <IconButton
+          size="large"
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ mr: 2 }}
+          onClick={() => dispatch(logout())}
+        >
+          <Logout />
+        </IconButton>
       </Toolbar>
     </AppBarMUI>
   );
